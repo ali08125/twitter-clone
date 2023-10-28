@@ -1,21 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/common/constants/constants.dart';
+import 'package:twitter_clone/common/utils/custom_snackbar.dart';
 import 'package:twitter_clone/common/widgets/rounded_small_button.dart';
 import 'package:twitter_clone/config/theme/theme.dart';
+import 'package:twitter_clone/features/auth/controller/auth_controller.dart';
 import 'package:twitter_clone/features/auth/view/signup_view.dart';
 import 'package:twitter_clone/features/auth/widgets/auth_field.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget {
   static const routeName = '/login_view';
 
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   final appBar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -27,8 +30,20 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
+  void onLogin() {
+    if (emailController.text != '' && passwordController.text != '') {
+      ref.read(authControllerProvider.notifier).login(
+          email: emailController.text,
+          password: passwordController.text,
+          context: context);
+    } else {
+      showSnackbar(context, 'Please fill all fields');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(authControllerProvider);
     return Scaffold(
       appBar: appBar,
       body: Center(
@@ -59,11 +74,11 @@ class _LoginViewState extends State<LoginView> {
                 Align(
                   alignment: Alignment.topRight,
                   child: RoundedSmallButton(
-                    onTap: () {},
+                    onTap: onLogin,
                     label: 'Login',
                     backgroundColor: Pallete.blueColor,
                     textColor: Pallete.whiteColor,
-                    isLoading: false,
+                    isLoading: isLoading,
                   ),
                 ),
                 const SizedBox(
