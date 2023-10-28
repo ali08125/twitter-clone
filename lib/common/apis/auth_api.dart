@@ -11,6 +11,8 @@ abstract class IAuthAPI {
   Future<DataState> signUp({required String email, required String password});
 
   Future<DataState> login({required String email, required String password});
+
+  Future<DataState> currentUserAccount();
 }
 
 class AuthAPI implements IAuthAPI {
@@ -19,6 +21,18 @@ class AuthAPI implements IAuthAPI {
   const AuthAPI({
     required Account account,
   }) : _account = account;
+
+  @override
+  Future<DataState> currentUserAccount() async {
+    try {
+      final account = await _account.get();
+      return DataSuccess(account);
+    } on AppwriteException catch (e) {
+      return DataFailed(e.message ?? 'Error');
+    } catch (e) {
+      return DataFailed(e.toString());
+    }
+  }
 
   @override
   Future<DataState> signUp(

@@ -14,6 +14,13 @@ final authControllerProvider =
   return AuthController(ref.watch(authAPIProvider));
 });
 
+final currentUserAccountProvider = FutureProvider(
+  (ref) {
+    final authController = ref.watch(authControllerProvider.notifier);
+    return authController.currentUser();
+  },
+);
+
 class AuthController extends StateNotifier<bool> {
   final AuthAPI _authAPI;
 
@@ -22,6 +29,8 @@ class AuthController extends StateNotifier<bool> {
         super(false);
 
   // state = isLoading
+
+  currentUser() => _authAPI.currentUserAccount();
 
   void signUp(
       {required String email,
