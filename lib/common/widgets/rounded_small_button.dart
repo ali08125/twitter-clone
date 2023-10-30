@@ -18,26 +18,25 @@ class RoundedSmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      splashFactory: InkRipple.splashFactory,
-      child: Chip(
-        backgroundColor: backgroundColor,
-        label: isLoading
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            minimumSize: const Size(90, 40),
+            splashFactory: InkRipple.splashFactory,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
+        onPressed: isLoading ? () {} : onTap,
+        child: isLoading
             ? const SizedBox(
-                height: 20,
                 width: 20,
+                height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
                   color: Pallete.whiteColor,
                 ),
               )
             : Text(
-                label,
+                'Sign up',
                 style: TextStyle(color: textColor, fontSize: 16),
-              ),
-        labelPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      ),
-    );
+              ));
   }
 }
