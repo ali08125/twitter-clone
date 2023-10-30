@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/common/constants/constants.dart';
-import 'package:twitter_clone/common/utils/custom_snackbar.dart';
+import 'package:twitter_clone/common/widgets/custom_snackbar.dart';
 import 'package:twitter_clone/common/widgets/rounded_small_button.dart';
 import 'package:twitter_clone/config/theme/theme.dart';
 import 'package:twitter_clone/features/auth/controller/auth_controller.dart';
@@ -21,7 +21,7 @@ class LoginView extends ConsumerStatefulWidget {
 class _LoginViewState extends ConsumerState<LoginView> {
   final appBar = UIConstants.appBar();
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final passwordController = TextEditingController(text: '12345678');
 
   @override
   void dispose() {
