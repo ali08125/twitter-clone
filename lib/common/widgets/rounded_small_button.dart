@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/theme/theme.dart';
 
 class RoundedSmallButton extends StatelessWidget {
-  const RoundedSmallButton(
-      {super.key,
-      required this.onTap,
-      required this.label,
-      required this.backgroundColor,
-      required this.textColor,
-      required this.isLoading});
+  const RoundedSmallButton({
+    super.key,
+    required this.onTap,
+    required this.label,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.isLoading,
+  });
 
   final VoidCallback onTap;
   final String label;
@@ -35,7 +36,7 @@ class RoundedSmallButton extends StatelessWidget {
                 ),
               )
             : Text(
-                'Sign up',
+                label,
                 style: TextStyle(color: textColor, fontSize: 16),
               ));
   }

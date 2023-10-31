@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class UserModel {
   final String name;
   final String email;
-  final List<String> followers;
-  final List<String> following;
+  final List<dynamic> followers;
+  final List<dynamic> following;
   final String profilePic;
   final String bannerPic;
   final String uid;
@@ -73,6 +73,4 @@ class UserModel {
         bio: map['bio'] ?? '',
         isTwitterBlue: map['isTwitterBlue'] ?? false);
   }
-
-
 }

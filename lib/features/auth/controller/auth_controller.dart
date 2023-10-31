@@ -27,6 +27,18 @@ final currentUserAccountProvider = FutureProvider(
   },
 );
 
+final currentUserDetailsProvider = FutureProvider((ref) {
+  final result = ref.watch(currentUserAccountProvider);
+  final currentUserId = result.value!.$id;
+  final userDetails = ref.watch(userDetailsProvider(currentUserId));
+  return userDetails.value;
+});
+
+final userDetailsProvider = FutureProvider.family((ref, String uid) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData(uid);
+});
+
 class AuthController extends StateNotifier<bool> {
   final AuthAPI _authAPI;
   final UserAPI _userAPI;
@@ -38,7 +50,12 @@ class AuthController extends StateNotifier<bool> {
 
   // state = isLoading
 
-  currentUser() => _authAPI.currentUserAccount();
+  currentUser() async {
+    final user = await _authAPI.currentUserAccount();
+    if (user is DataSuccess) {
+      return user.data;
+    }
+  }
 
   void signUp(
       {required String email,
@@ -55,7 +72,7 @@ class AuthController extends StateNotifier<bool> {
           following: const [],
           profilePic: '',
           bannerPic: '',
-          uid: '',
+          uid: result.data.$id,
           bio: '',
           isTwitterBlue: false);
       final res = await _userAPI.saveUserData(userModel);
@@ -85,5 +102,10 @@ class AuthController extends StateNotifier<bool> {
       showSnackbar(context, result.error ?? 'Unknown error');
       state = false;
     }
+  }
+
+  Future<UserModel> getUserData(String uid) async {
+    final document = await _userAPI.getUserData(uid);
+    return UserModel.fromMap(document.data);
   }
 }
