@@ -1,4 +1,6 @@
+
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/common/constants/appwrite_constants.dart';
 import 'package:twitter_clone/common/data_state/data_state.dart';
@@ -11,6 +13,8 @@ final tweetAPIProvider = Provider((ref) {
 
 abstract class ITweetAPI {
   Future<DataState> shareTweet(Tweet tweet);
+
+  Future<List<Document>> getTweets();
 }
 
 class TweetAPI implements ITweetAPI {
@@ -34,5 +38,14 @@ class TweetAPI implements ITweetAPI {
     } catch (e) {
       return DataFailed(e.toString());
     }
+  }
+
+  @override
+  Future<List<Document>> getTweets() async {
+    final result = await _databases.listDocuments(
+      databaseId: AppwriteConstants.databaseId,
+      collectionId: AppwriteConstants.tweetsCollectionId,
+    );
+    return result.documents;
   }
 }

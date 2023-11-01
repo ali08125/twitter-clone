@@ -3,13 +3,13 @@ import 'package:twitter_clone/common/enum/tweet_type_enum.dart';
 class Tweet {
   final String text;
   final String link;
-  final List<String> hashtags;
-  final List<String> imageLinks;
+  final List<dynamic> hashtags;
+  final List<dynamic> imageLinks;
   final String uid;
   final TweetType tweetType;
   final DateTime tweetedAt;
-  final List<String> likes;
-  final List<String> commentIds;
+  final List<dynamic> likes;
+  final List<dynamic> commentIds;
   final String id;
   final int reShareCount;
 
@@ -79,13 +79,13 @@ class Tweet {
     return Tweet(
       text: map['text'] as String,
       link: map['link'] as String,
-      hashtags: map['hashtags'] as List<String>,
-      imageLinks: map['imageLinks'] as List<String>,
+      hashtags: map['hashtags'],
+      imageLinks: map['imageLinks'],
       uid: map['uid'] as String,
       tweetType: (map['tweetType'] as String).toTweetTypeEnum(),
-      tweetedAt: map['tweetedAt'] as DateTime,
-      likes: map['likes'] as List<String>,
-      commentIds: map['commentIds'] as List<String>,
+      tweetedAt: DateTime.fromMillisecondsSinceEpoch(map['tweetedAt'] * 1000),
+      likes: map['likes'] ,
+      commentIds: map['commentIds'],
       id: map['\$id'] as String,
       reShareCount: map['reShareCount'] as int,
     );
