@@ -103,7 +103,9 @@ class _CreateTweetViewState extends ConsumerState<CreateTweetView> {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(currentUser.profilePic),
+                          backgroundImage: currentUser.profilePic != ''
+                              ? NetworkImage(currentUser.profilePic)
+                              : null,
                           radius: 30,
                         ),
                         const SizedBox(

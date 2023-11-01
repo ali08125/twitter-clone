@@ -38,7 +38,7 @@ class TweetController extends StateNotifier<bool> {
 
   Future<List<Tweet>> getTweets() async {
     final document = await _tweetAPI.getTweets();
-    return (document).map((tweet) => Tweet.fromMap(tweet.data)).toList();
+    return document.map((tweet) => Tweet.fromMap(tweet.data)).toList();
   }
 
   void shareTweet({
