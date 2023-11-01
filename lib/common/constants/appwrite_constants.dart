@@ -4,4 +4,8 @@ class AppwriteConstants {
   static const endPoint = 'https://cloud.appwrite.io/v1';
   static const usersCollectionId = '653dfc460587734882fd';
   static const tweetsCollectionId = '654129725acd798f326b';
+  static const imagesBucketId = '654136728510fe653152';
+
+  static String imageUrl(String imageId) =>
+      '$endPoint/storage/buckets/$imagesBucketId/files/$imageId/view?project=$projectId&mode=admin';
 }
