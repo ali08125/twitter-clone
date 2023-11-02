@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CarouselImage extends StatefulWidget {
   const CarouselImage({super.key, required this.imageLinks});
@@ -32,12 +31,11 @@ class _CarouselImageState extends State<CarouselImage> {
                     margin: const EdgeInsets.all(10),
                     child: Image.network(
                       image,
-                      fit: BoxFit.contain,
                     ),
                   );
                 }).toList(),
                 options: CarouselOptions(
-                  height: 400,
+                  height: 200,
                   enableInfiniteScroll: false,
                   onPageChanged: (index, reason) {
                     setState(() {
